@@ -1,0 +1,29 @@
+<footer class="site-footer">
+  <div class="footer-orb"></div>
+  <div class="footer-grid">
+    <div>
+      <p class="eyebrow">{{ shop.name }}</p>
+      <h2>Designed for the quiet future of luxury commerce.</h2>
+    </div>
+    <div class="footer-links">
+      {% for link in section.settings.menu.links %}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {% endfor %}
+    </div>
+  </div>
+  <p class="footer-note">&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Footer menu",
+      "default": "footer"
+    }
+  ]
+}
+{% endschema %}

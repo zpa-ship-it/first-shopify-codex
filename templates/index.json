@@ -1,0 +1,63 @@
+{
+  "sections": {
+    "intro": {
+      "type": "cinematic-intro",
+      "settings": {
+        "enabled": true,
+        "kicker": "Entering live mode",
+        "heading": "The store wakes up.",
+        "button_label": "Enter",
+        "play_once": true,
+        "auto_duration": 0
+      }
+    },
+    "showroom": {
+      "type": "spatial-showroom",
+      "settings": {
+        "collection": "all",
+        "eyebrow": "Codex build",
+        "heading": "Commerce from 2050",
+        "signal": "Every interaction opens a scene",
+        "primary_label": "Open portals",
+        "primary_link": "shopify://collections/all",
+        "secondary_label": "All products",
+        "secondary_link": "shopify://collections/all"
+      }
+    },
+    "hero": {
+      "type": "ios-hero",
+      "settings": {
+        "eyebrow": "LUMA OS 4D",
+        "heading": "A store that feels alive.",
+        "text": "Video, liquid glass, depth, touch reactions, and an iOS-style interface that moves with the visitor.",
+        "primary_label": "Shop the drop",
+        "primary_link": "shopify://collections/all",
+        "secondary_label": "Feel the interface",
+        "secondary_link": "shopify://collections/all",
+        "card_label": "Interaction engine",
+        "card_value": "Alive OS",
+        "live_label": "Live 4D"
+      }
+    },
+    "featured": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "The edit",
+        "heading": "Objects with atmosphere.",
+        "collection": "all",
+        "limit": 4,
+        "link_label": "View all"
+      }
+    },
+    "feature": {
+      "type": "liquid-feature",
+      "settings": {
+        "badge": "Liquid glass",
+        "eyebrow": "System feel",
+        "heading": "Soft reflections. Sharp commerce.",
+        "text": "A dark, polished interface that feels closer to a product launch than a default Shopify theme."
+      }
+    }
+  },
+  "order": ["intro", "showroom", "featured", "feature"]
+}

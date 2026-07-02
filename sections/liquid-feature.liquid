@@ -1,0 +1,63 @@
+<section class="luma-section liquid-feature">
+  <div class="liquid-feature__media">
+    {% if section.settings.image != blank %}
+      <img
+        src="{{ section.settings.image | image_url: width: 1600 }}"
+        alt="{{ section.settings.image.alt | escape }}"
+        width="{{ section.settings.image.width }}"
+        height="{{ section.settings.image.height }}"
+        loading="lazy"
+      >
+    {% endif %}
+    <div class="liquid-feature__glass">
+      <span>{{ section.settings.badge }}</span>
+    </div>
+  </div>
+  <div class="liquid-feature__text">
+    <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+    <h2>{{ section.settings.heading }}</h2>
+    <p>{{ section.settings.text }}</p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Liquid glass feature",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "badge",
+      "label": "Glass badge",
+      "default": "Liquid glass"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "System feel"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Soft reflections. Sharp commerce."
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Every surface is dark, polished, and quiet. Products stay central while motion and depth create the premium feeling."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Liquid glass feature"
+    }
+  ]
+}
+{% endschema %}

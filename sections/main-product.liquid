@@ -1,0 +1,61 @@
+<section class="product-page">
+  <div class="product-gallery">
+    {% for media in product.media %}
+      <div class="product-media">
+        {{ media | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '500, 800, 1100, 1400', sizes: '(min-width: 990px) 55vw, 100vw' }}
+      </div>
+    {% else %}
+      <div class="product-media placeholder-shine"></div>
+    {% endfor %}
+  </div>
+
+  <div class="product-info">
+    <p class="eyebrow">{{ product.vendor }}</p>
+    <h1>{{ product.title }}</h1>
+    <p class="product-price">{{ product.selected_or_first_available_variant.price | money }}</p>
+
+    {% form 'product', product, class: 'product-form', data-product-form: section.id %}
+      <input data-variant-id type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+      {% unless product.has_only_default_variant %}
+        {% for option in product.options_with_values %}
+          <label class="option-label" for="Option-{{ section.id }}-{{ forloop.index0 }}">{{ option.name }}</label>
+          <select id="Option-{{ section.id }}-{{ forloop.index0 }}" class="glass-select" data-option-position="{{ option.position }}">
+            {% for value in option.values %}
+              <option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>
+                {{ value }}
+              </option>
+            {% endfor %}
+          </select>
+        {% endfor %}
+      {% endunless %}
+
+      <div class="quantity-row">
+        <label for="Quantity-{{ section.id }}">Quantity</label>
+        <input id="Quantity-{{ section.id }}" name="quantity" type="number" value="1" min="1">
+      </div>
+
+      <button data-product-submit class="button-glass button-glass--primary product-submit" type="submit" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+        {% if product.selected_or_first_available_variant.available %}
+          Add to bag
+        {% else %}
+          Sold out
+        {% endif %}
+      </button>
+    {% endform %}
+
+    {% if product.description != blank %}
+      <div class="product-description rte">{{ product.description }}</div>
+    {% endif %}
+  </div>
+</section>
+
+<script type="application/json" id="ProductVariants-{{ section.id }}">
+  {{ product.variants | json }}
+</script>
+
+{% schema %}
+{
+  "name": "Product"
+}
+{% endschema %}

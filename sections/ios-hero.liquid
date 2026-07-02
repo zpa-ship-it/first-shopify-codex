@@ -1,0 +1,175 @@
+{% assign interaction_source = section.settings.interaction_video.sources | first %}
+
+<section
+  class="ios-hero alive-hero"
+  aria-label="{{ section.settings.heading | escape }}"
+  data-alive-hero
+  {% if interaction_source != blank %}
+    data-interaction-video="{{ interaction_source.url }}"
+    data-interaction-video-type="{{ interaction_source.mime_type }}"
+  {% endif %}
+>
+  {% if section.settings.video != blank %}
+    <video class="ios-hero__media" autoplay muted loop playsinline preload="metadata">
+      {% for source in section.settings.video.sources %}
+        <source src="{{ source.url }}" type="{{ source.mime_type }}">
+      {% endfor %}
+    </video>
+  {% elsif section.settings.image != blank %}
+    <img
+      class="ios-hero__media"
+      src="{{ section.settings.image | image_url: width: 2400 }}"
+      alt="{{ section.settings.image.alt | escape }}"
+      width="{{ section.settings.image.width }}"
+      height="{{ section.settings.image.height }}"
+      loading="eager"
+    >
+  {% else %}
+    <div class="ios-hero__media ios-hero__fallback"></div>
+  {% endif %}
+
+  <div class="hero-noise"></div>
+  <div class="hero-depth"></div>
+  <div class="alive-light alive-light--a"></div>
+  <div class="alive-light alive-light--b"></div>
+  <div class="alive-light alive-light--c"></div>
+
+  <div class="alive-orbit" aria-hidden="true">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <div class="hero-particles" aria-hidden="true">
+    {% for i in (1..26) %}
+      <span></span>
+    {% endfor %}
+  </div>
+
+  <div class="alive-stage" aria-hidden="true">
+    <div class="alive-device" data-alive-tilt>
+      <div class="alive-device__screen">
+        <div class="alive-device__island"></div>
+        <div class="alive-device__lens alive-device__lens--top"></div>
+        <div class="alive-device__lens alive-device__lens--left"></div>
+        <div class="alive-device__lens alive-device__lens--right"></div>
+        <div class="alive-device__product">
+          <span></span>
+          <strong>{{ section.settings.card_value }}</strong>
+        </div>
+        <div class="alive-device__wave"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ios-hero__content">
+    <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+    <h1>{{ section.settings.heading }}</h1>
+    <p class="hero-copy">{{ section.settings.text }}</p>
+    <div class="hero-actions">
+      {% if section.settings.primary_label != blank %}
+        <a class="button-glass button-glass--primary" href="{{ section.settings.primary_link }}">
+          {{ section.settings.primary_label }}
+        </a>
+      {% endif %}
+      {% if section.settings.secondary_label != blank %}
+        <a class="button-glass" href="{{ section.settings.secondary_link }}">
+          {{ section.settings.secondary_label }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="hero-device-card" aria-hidden="true">
+    <div class="device-glow"></div>
+    <p>{{ section.settings.card_label }}</p>
+    <strong>{{ section.settings.card_value }}</strong>
+    <span>{{ section.settings.live_label }}</span>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "iOS cinematic hero",
+  "settings": [
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Background video"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Fallback image"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "LUMA OS"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Fluid luxury, engineered for now."
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "A cinematic storefront with liquid glass, precise motion, and a premium shopping flow built for Shopify."
+    },
+    {
+      "type": "text",
+      "id": "primary_label",
+      "label": "Primary button",
+      "default": "Shop the drop"
+    },
+    {
+      "type": "url",
+      "id": "primary_link",
+      "label": "Primary link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Secondary button",
+      "default": "Explore"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Secondary link"
+    },
+    {
+      "type": "text",
+      "id": "card_label",
+      "label": "Floating card label",
+      "default": "New collection"
+    },
+    {
+      "type": "text",
+      "id": "card_value",
+      "label": "Floating card value",
+      "default": "AURA 01"
+    },
+    {
+      "type": "text",
+      "id": "live_label",
+      "label": "Live badge",
+      "default": "Live 4D"
+    },
+    {
+      "type": "video",
+      "id": "interaction_video",
+      "label": "Video launched by interactions"
+    }
+  ],
+  "presets": [
+    {
+      "name": "iOS cinematic hero"
+    }
+  ]
+}
+{% endschema %}

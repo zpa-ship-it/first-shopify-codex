@@ -1,0 +1,73 @@
+<section class="luma-section product-showcase">
+  <div class="section-heading">
+    <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+    <h2>{{ section.settings.heading }}</h2>
+    {% if section.settings.link_label != blank %}
+      <a href="{{ section.settings.collection.url }}">{{ section.settings.link_label }}</a>
+    {% endif %}
+  </div>
+
+  <div class="product-grid">
+    {% assign collection = section.settings.collection %}
+    {% if collection != blank and collection.products_count > 0 %}
+      {% for product in collection.products limit: section.settings.limit %}
+        {% render 'product-card', product: product %}
+      {% endfor %}
+    {% else %}
+      {% for i in (1..4) %}
+        <article class="product-card product-card--placeholder">
+          <div class="product-card__image placeholder-shine"></div>
+          <div class="product-card__body">
+            <p>Product preview</p>
+            <strong>$00.00</strong>
+          </div>
+        </article>
+      {% endfor %}
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The edit"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Objects with atmosphere."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "label": "Products",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "View all label",
+      "default": "View all"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured collection"
+    }
+  ]
+}
+{% endschema %}

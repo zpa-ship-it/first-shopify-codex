@@ -1,0 +1,121 @@
+{% comment %}
+  Cinematic intro overlay for Shopify home page.
+{% endcomment %}
+
+{% if template.name == 'index' and section.settings.enabled %}
+  <div
+    id="CinematicIntro-{{ section.id }}"
+    class="cinematic-intro"
+    data-session-key="cinematic-intro-seen-{{ section.id }}"
+    data-play-once="{{ section.settings.play_once }}"
+    data-duration="{{ section.settings.auto_duration }}"
+  >
+    {% if section.settings.video != blank %}
+      <video class="cinematic-intro__video" autoplay muted playsinline loop preload="auto">
+        {% for source in section.settings.video.sources %}
+          <source src="{{ source.url }}" type="{{ source.mime_type }}">
+        {% endfor %}
+      </video>
+    {% elsif section.settings.image != blank %}
+      <img
+        class="cinematic-intro__video"
+        src="{{ section.settings.image | image_url: width: 2400 }}"
+        alt="{{ section.settings.image.alt | escape }}"
+        width="{{ section.settings.image.width }}"
+        height="{{ section.settings.image.height }}"
+        loading="eager"
+      >
+    {% else %}
+      <div class="cinematic-intro__video cinematic-intro__fallback"></div>
+    {% endif %}
+
+    <div class="cinematic-intro__vignette"></div>
+    <div class="cinematic-intro__scan"></div>
+
+    <div class="cinematic-intro__content">
+      {% if section.settings.logo != blank %}
+        <img
+          class="cinematic-intro__logo"
+          src="{{ section.settings.logo | image_url: width: 640 }}"
+          alt="{{ shop.name | escape }}"
+          loading="eager"
+          width="{{ section.settings.logo.width }}"
+          height="{{ section.settings.logo.height }}"
+        >
+      {% endif %}
+
+      <p>{{ section.settings.kicker }}</p>
+      <h1>{{ section.settings.heading }}</h1>
+      <button class="cinematic-intro__enter" type="button">
+        <span>{{ section.settings.button_label }}</span>
+      </button>
+    </div>
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "4D cinematic intro",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "Enable intro",
+      "default": true
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Intro video"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Fallback image"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "Entering live mode"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The store wakes up."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Enter"
+    },
+    {
+      "type": "checkbox",
+      "id": "play_once",
+      "label": "Show once per session",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "auto_duration",
+      "label": "Auto close seconds",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "4D cinematic intro"
+    }
+  ]
+}
+{% endschema %}

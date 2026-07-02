@@ -1,0 +1,69 @@
+<header class="site-header" data-luma-header>
+  <a class="brand-mark" href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+    {% if section.settings.logo != blank %}
+      <img
+        src="{{ section.settings.logo | image_url: width: 360 }}"
+        alt="{{ shop.name | escape }}"
+        width="{{ section.settings.logo.width }}"
+        height="{{ section.settings.logo.height }}"
+        loading="eager"
+      >
+    {% else %}
+      <span>{{ section.settings.logo_text | default: shop.name }}</span>
+    {% endif %}
+  </a>
+
+  <nav class="desktop-nav" aria-label="Main navigation">
+    {% for link in section.settings.menu.links %}
+      <a href="{{ link.url }}">{{ link.title }}</a>
+    {% endfor %}
+  </nav>
+
+  <div class="header-actions">
+    <a class="glass-icon" href="{{ routes.search_url }}" aria-label="Search">
+      <span></span>
+    </a>
+    <a class="cart-pill" href="{{ routes.cart_url }}" aria-label="Cart">
+      <span>Bag</span>
+      <strong>{{ cart.item_count }}</strong>
+    </a>
+    <button class="mobile-menu-button" type="button" aria-expanded="false" aria-controls="MobileMenu" data-menu-toggle>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="MobileMenu" hidden data-mobile-menu>
+  <div class="mobile-menu__panel">
+    {% for link in section.settings.menu.links %}
+      <a href="{{ link.url }}">{{ link.title }}</a>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "shopify-section-header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image"
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo text",
+      "default": "LUMA"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,37 @@
+<section class="page-shell">
+  <div class="page-hero">
+    <p class="eyebrow">Search</p>
+    <h1>Find your piece</h1>
+  </div>
+
+  <form class="search-form" action="{{ routes.search_url }}" method="get" role="search">
+    <input name="q" value="{{ search.terms | escape }}" placeholder="Search products" type="search">
+    <button class="button-glass button-glass--primary" type="submit">Search</button>
+  </form>
+
+  {% if search.performed %}
+    <div class="product-grid">
+      {% paginate search.results by 24 %}
+        {% for item in search.results %}
+          {% if item.object_type == 'product' %}
+            {% render 'product-card', product: item %}
+          {% endif %}
+        {% else %}
+          <p class="empty-state">No results found.</p>
+        {% endfor %}
+
+        {% if paginate.pages > 1 %}
+          <nav class="pagination" aria-label="Pagination">
+            {{ paginate | default_pagination }}
+          </nav>
+        {% endif %}
+      {% endpaginate %}
+    </div>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Search"
+}
+{% endschema %}
